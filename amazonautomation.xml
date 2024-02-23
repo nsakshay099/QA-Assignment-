@@ -4,11 +4,9 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;  
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;  
+import org.openqa.selenium.chrome.ChromeDriver;
+import java.util.Set;
   
-/**
- * 
- */
 public class Test {  
   
     public static void main(String[] args) {  
@@ -24,36 +22,51 @@ public class Test {
     //Account Login
     //In some cases Amazon asks for the capcha. In that case below flow got cut.
     //Entering the email or phone number
-    driver.findElement(By.id("ap_email")).sendKeys("enter_your_emailid_or_phonenumber_here");  
+    driver.findElement(By.id("ap_email")).sendKeys("7902843956");  
           
     //Click on the continue button  
-    driver.findElement(By.name("continue")).click(); 
+    driver.findElement(By.id("continue")).click(); 
     driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
     
     //Entering password
-    driver.findElement(By.id("ap_password")).sendKeys("enter_your_password_here");  
+    driver.findElement(By.id("ap_password")).sendKeys("Akshay@123");  
  
     //Click on the Signin button  
-    driver.findElement(By.name("signInSubmit")).click(); 
+    driver.findElement(By.id("signInSubmit")).click(); 
     driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
     
     //NB:  This flow won't work if you are enabled two factor verification
     
     //Entering item in the search box
-    driver.findElement(By.id("twotabsearchtextbox")).sendKeys("enter_your_item_name_here");
+    driver.findElement(By.id("twotabsearchtextbox")).sendKeys("iphone 15 pro max");
   
     //Click on the Search button  
-    driver.findElement(By.name("nav-search-submit-button")).click(); 
+    driver.findElement(By.id("nav-search-submit-button")).click(); 
     driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
     
     //Selecting first item in the list
-    WebElement firstResult = driver.findElement(By.cssSelector("a-size-medium a-color-base a-text-normal")); // You may need to update this selector
+    WebElement firstResult = driver.findElement(By.cssSelector("span[class='a-size-medium a-color-base a-text-normal']")); // You may need to update this selector
     firstResult.click();
+    
+    
+ // Get all window handles
+    Set<String> windowHandles = driver.getWindowHandles();
+
+    // Iterate over handles to switch to the new tab
+    for (String handle : windowHandles) {
+        driver.switchTo().window(handle);
+
+        // Check the title or other conditions to verify if it's the desired new tab
+        if (!driver.getTitle().equals("Amazon.in : iphone 15 pro max")) {
+            break;
+        }
+    }
+    
+    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+    //Click Buy Now
+    driver.findElement(By.id("buy-now-button")).click(); 
     driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
     
-    //Click Buy Now
-    driver.findElement(By.name("buy-now-button")).click(); 
-    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
     
     //Payment method flow
     

@@ -1,0 +1,62 @@
+package Amaz;
+
+import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.By;  
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;  
+  
+/**
+ * 
+ */
+public class Test {  
+  
+    public static void main(String[] args) {  
+        
+    // declaration and instantiation of objects/variables  
+    System.setProperty("webdriver.chrome.driver", "E:\\Drivers\\ChromeDriver\\chromedriver.exe");  
+    WebDriver driver=new ChromeDriver();  
+			      
+    // Launch website  
+    driver.navigate().to("https://www.amazon.in/ap/signin?openid.pape.max_auth_age=0&openid.return_to=https%3A%2F%2Fwww.amazon.in%2F%3Fref_%3Dnav_custrec_signin&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=inflex&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0");  
+    driver.manage().window().maximize();
+    
+    //Account Login
+    //In some cases Amazon asks for the capcha. In that case below flow got cut.
+    //Entering the email or phone number
+    driver.findElement(By.id("ap_email")).sendKeys("enter_your_emailid_or_phonenumber_here");  
+          
+    //Click on the continue button  
+    driver.findElement(By.name("continue")).click(); 
+    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+    
+    //Entering password
+    driver.findElement(By.id("ap_password")).sendKeys("enter_your_password_here");  
+ 
+    //Click on the Signin button  
+    driver.findElement(By.name("signInSubmit")).click(); 
+    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+    
+    //NB:  This flow won't work if you are enabled two factor verification
+    
+    //Entering item in the search box
+    driver.findElement(By.id("twotabsearchtextbox")).sendKeys("enter_your_item_name_here");
+  
+    //Click on the Search button  
+    driver.findElement(By.name("nav-search-submit-button")).click(); 
+    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+    
+    //Selecting first item in the list
+    WebElement firstResult = driver.findElement(By.cssSelector("a-size-medium a-color-base a-text-normal")); // You may need to update this selector
+    firstResult.click();
+    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+    
+    //Click Buy Now
+    driver.findElement(By.name("buy-now-button")).click(); 
+    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+    
+    //Payment method flow
+    
+    }  
+  
+}
